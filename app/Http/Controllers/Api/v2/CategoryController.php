@@ -12,23 +12,24 @@ class CategoryController extends Controller
     {
        
         $categories = Category::where('parent_category_id' , '0')->get();
-        if ($request->expectsJson()) {
+        
+        //if ($request->expectsJson()) {
             return response()->json([
                 'message' => 'Get All Category!',
                 'data' => $categories
             ]);
-        }
+        //}
     }
 
     public function subCategory(Request $request)
     {
         $id = $request->id;
         $subCats = Category::where('parent_category_id', $id)->get();
-        if ($request->expectsJson()) {
-            return response()->json([
-                'message' => 'Get All SubCategory!',
-                'data' => $subCats
-            ]);
-        }
+        
+        return response()->json([
+            'message' => 'Get All SubCategory!',
+            'data' => $subCats
+        ]);
+        
     }
 }

@@ -7,12 +7,19 @@
           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">Category</h3>
+              <portal to="destination" :disabled="false">
+                <p>
+                  This slot content will be rendered right here as long as the `disabled` prop
+                  evaluates to `true`,<br />
+                  and will be rendered at the defined destination as when it is set to `false`
+                  (which is the default).
+                </p>
+              </portal>
             </div>
             <!-- /.card-header -->
            
             <!-- form start -->
             <form role="form">
-               {{ getCategories }}
               <div class="card-body">
                 <div class="row">
                     <div class="col-6">
@@ -164,6 +171,7 @@ export default {
         axios.get(`/api/v2/subCategory/${id}`)
         .then(response=>{
           //let cats = response.data.data;
+          //console.log(response);
           console.log(response.data.data.length);
           if (response.data.data.length > 0)
             {
@@ -207,6 +215,7 @@ export default {
     this.$store.dispatch('getCategories');
     //this.categories = this.$store.getters.categories
     this.allCategories();
+     console.log(this.select_groups);
   },
   computed:{
      getCategories(){

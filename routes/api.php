@@ -75,5 +75,6 @@ Route::group(['middleware' => 'api','prefix' =>'v2' , 'namespace' =>'Api\v2'], f
     Route::post('me', 'AuthController@me');
     Route::post('register', 'AuthController@register');
     Route::post('checkUserExpireTime', 'AuthController@checkUserExpireTime');
-
+    Route::get('allCategories', 'CategoryController@allCategories');
+    Route::get('subCategory/{id}', 'CategoryController@subCategory');
 });
