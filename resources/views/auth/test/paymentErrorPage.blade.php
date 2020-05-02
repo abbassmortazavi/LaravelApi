@@ -1,0 +1,1 @@
+<h1>empty error page</h1>
