@@ -9,7 +9,7 @@
                         <!-- <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-3" v-for="(group , i ) in select_groups" :key="`select-item-${i}`">
                               <p class="mb-2">{{group.name}}</p>
                               <select v-model="group.model" @change="handle_change(group.model)">
-                                    <option v-for="(option,j) in group.options" :key="`option-item-${i}-${j}`" :value="option.value">{{option.title}}</option>
+                                    <option v-for="option in group.options" :key="option.value" :value="option.value">{{option.title}}</option>
                               </select>
                         </div> -->
 
@@ -50,8 +50,8 @@
                         };
                         this.select_groups.push(new_group) */
                   },
-                  handle_change(id) {
-                        // watch value on developer tools
+                  handle_change(event) {
+                        let id = event.target.value;
                         console.log(id)
                   }
             }

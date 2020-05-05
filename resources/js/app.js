@@ -6,7 +6,15 @@ import Vuex from 'vuex';
 import router from './routes';
 import 'admin-lte/dist/css/adminlte.css';
 import {initialize} from './service/General';
+import PortalVue from 'portal-vue';
+import VueAppend from 'vue-append';
 
+
+//Vue Append
+Vue.use(VueAppend);
+
+//vue portal
+Vue.use(PortalVue);
 //vuex
 Vue.use(Vuex);
 import storeData from './store';
@@ -17,6 +25,8 @@ import { Form, HasError, AlertError } from 'vform';
 window.Form = Form;
 Vue.component(HasError.name, HasError);
 Vue.component(AlertError.name, AlertError);
+
+
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('select-component', require('./components/admin/views/SelectComponent.vue'));

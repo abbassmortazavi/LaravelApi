@@ -7,17 +7,9 @@
           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">Category</h3>
-              <portal to="destination" :disabled="false">
-                <p>
-                  This slot content will be rendered right here as long as the `disabled` prop
-                  evaluates to `true`,<br />
-                  and will be rendered at the defined destination as when it is set to `false`
-                  (which is the default).
-                </p>
-              </portal>
             </div>
             <!-- /.card-header -->
-           
+
             <!-- form start -->
             <form role="form">
               <div class="card-body">
@@ -86,12 +78,19 @@
                                 {{ category.category_name }}
                               </option>
                           </select>
-                          
+
                       </div>
                   </div>
                   <div class="col-sm-6">
                       <div id="sub-category-container">
-                        <select-component :select_groups="select_groups"></select-component>
+                        <!-- <select-component :select_groups="select_groups"></select-component> -->
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-3">
+                              <p class="mb-2">j</p>
+                              <!-- <select @change="getValueOption($event)">
+                                    <option v-for="option in select_groups.options" :key="option.value" :value="option.value">{{option.title}}</option>
+                              </select> -->
+                              <div v-html="myContent"></div>
+                        </div>
                       </div>
                       <input type="hidden" id="parent-category-id" name="parent_category_id" value="0">
                   </div>
@@ -114,11 +113,11 @@
                   </div>
                   <div class="col-6">
                     <div class="form-group">
-                        
+
                     </div>
                   </div>
                 </div>
-               
+
               </div>
               <!-- /.card-body -->
 
@@ -151,6 +150,8 @@ export default {
       categories: [],
       subCategories: [],
       select_groups: [],
+      html: '',
+        myContent: '<span>toto</span>'
     }
   },
   methods:{
@@ -165,9 +166,9 @@ export default {
       },
       getValueOption(event){
          let id = event.target.value;
-       
+
          this.select_groups = [];
-     
+
         axios.get(`/api/v2/subCategory/${id}`)
         .then(response=>{
           //let cats = response.data.data;
@@ -175,6 +176,7 @@ export default {
           console.log(response.data.data.length);
           if (response.data.data.length > 0)
             {
+
                this.subCategories = response.data.data;
                 let options = [];
                for (let index = 0; index < this.subCategories.length; index++) {
@@ -183,7 +185,7 @@ export default {
                  let objectOptions = {
                    title: title,
                    value: id
-                 }
+                 };
                  options.push(objectOptions);
                  let groups_count = this.select_groups.length + 1;
                   const new_group = {
@@ -194,34 +196,39 @@ export default {
                   this.select_groups.push(new_group);
                }
                 this.select_groups = this.select_groups[0];
+
                console.log(this.select_groups);
-               
+               this.html = `<a @click="${this.handle_change}">ok</a>`;
+
+
             }
-    
+
         }).catch(error=>{
           console.log(error);
         });
-        
-      },
-      handle_change(event) {
-           let id = event.target.value;
 
-           this.getValueOption(id);
-            //console.log(id);
+      },
+      handle_change() {
+           //let id = this.value;
+
+           //this.getValueOption(id);
+            console.log('ok');
+      },
+      render (ce) {
+          return ce('div', this.myContent)
       }
-      
   },
   mounted(){
     this.$store.dispatch('getCategories');
     //this.categories = this.$store.getters.categories
     this.allCategories();
-     console.log(this.select_groups);
+     //console.log(this.select_groups);
   },
   computed:{
      getCategories(){
        return this.$store.getters.categories;
      }
   },
-  
+
 }
 </script>
